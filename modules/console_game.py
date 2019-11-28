@@ -85,8 +85,10 @@ class LottoConsole:
                 m_rest_players.append(player.name)
             if player.finished:
                 m_win.append(player.name)
-        if 1 == len(m_rest_players):
+        if len(self.players) > 1 and 1 == len(m_rest_players):
             m_return = m_rest_players[0]
+        elif 1 == len(self.players) and 0 == len(m_rest_players):
+            m_return = 'none'
         elif m_win:
             m_return = ', '.join(m_win)
         else:
@@ -94,9 +96,10 @@ class LottoConsole:
         return m_return
 
     def start_new_game(self):
-        if len(self.players) < 2:
-            print('Ошибка! Количество участников меньше двух.')
-            print('         Запустите настройку участников и заполните хотя бы двух игроков.')
+        if len(self.players) < 1:
+            print('Беда-беда-огорчение!')
+            print('    А играть-то и некому...')
+            print('    Запустите настройку участников и заполните хотя бы одного игрока.')
             return None
         self.round_no = 0
         self.bag.shuffle()
@@ -124,7 +127,13 @@ class LottoConsole:
                     if player.failed:
                         print('!!! Вы допустили ошибку и выбываете из дальнейшей борьбы.')
                 winner = self.check_round_results()
-                if winner:
+                if 'none' == winner:
+                    print('\n')
+                    print(f'    На {self.round_no}-м ходу все игроки слились!!!')
+                    print(f'    Призовой фонд уходит... в туман !!!')
+                    print('\n')
+                    break
+                elif winner:
                     print('\n')
                     print(f'    На {self.round_no}-м ходу у нас определился победитель!!!')
                     print(f'    Это: {winner} !!!')
