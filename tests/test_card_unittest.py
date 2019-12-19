@@ -47,3 +47,19 @@ class TestLottoCard(unittest.TestCase):
                 m_cnt += 1 if r[n] else 0
         self.assertEqual(m_cnt, 15)
         self.assertEqual(self.card.get_rest(), 0)
+
+    def test_str(self):
+        self.assertEqual(self.card.__str__(), 'Класс "Карта для игры в лото". Осталось 15 незачёркнутых чисел.')
+        self.card.mark(list(self.card.rows[0].keys())[0])
+        self.assertEqual(self.card.__str__(), 'Класс "Карта для игры в лото". Осталось 14 незачёркнутых чисел.')
+
+    def test_eq(self):
+        self.assertTrue(self.card == self.card)
+        tmp = LottoCard()
+        self.assertFalse(self.card == tmp)
+        self.card.mark(list(self.card.rows[0].keys())[0])
+        self.assertFalse(self.card == tmp)
+        self.assertGreater(tmp, self.card)
+        self.assertGreaterEqual(tmp, self.card)
+        self.assertLess(self.card, tmp)
+        self.assertLessEqual(self.card, tmp)
