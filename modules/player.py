@@ -37,6 +37,20 @@ class LottoPlayer:
         self.failed = False
         self.finished = False
 
+    def __str__(self):
+        return f'Класс "Игрок в лото". Имя игрока: {self.name}. Тип игрока: \"{"человек" if "h" == self.kind else "компьютер"}\".'
+
+    def __eq__(self, other):
+        return self.kind == other.kind and self.name == other.name and self.card == other.card
+
 
 if '__main__' == __name__:
     m_user = LottoPlayer('h', 'Alex')
+    m_comp = LottoPlayer('c', 'SkyNet')
+    m_test = LottoPlayer('h', 'Alex')
+    print(m_user)
+    print(m_comp)
+    print(m_user == m_comp)
+    print(m_user != m_comp)
+    print(m_user == m_test)
+    print(m_user != m_test)
