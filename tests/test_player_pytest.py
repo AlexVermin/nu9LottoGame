@@ -101,3 +101,12 @@ class TestLottoPlayer:
         assert self.hum.card.get_rest() == 0
         assert self.com.finished is True
         assert self.com.card.get_rest() == 0
+
+    def test_str(self):
+        assert self.hum.__str__() == 'Класс "Игрок в лото". Имя игрока: Player. Тип игрока: "человек".'
+        assert self.com.__str__() == 'Класс "Игрок в лото". Имя игрока: SkyNet. Тип игрока: "компьютер".'
+
+    def test_eq(self):
+        assert self.hum == self.hum
+        assert self.com == self.com
+        assert self.hum != self.com

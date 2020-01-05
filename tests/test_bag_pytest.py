@@ -5,6 +5,7 @@ class TestLottoBag:
 
     def setup(self):
         self.obj = LottoBag()
+        self.bag = LottoBag()
 
     def test_init(self):
         assert self.obj.count == 0
@@ -36,3 +37,21 @@ class TestLottoBag:
         for i in range(1, 91):
             m_test = self.obj.get_number()
         assert self.obj.get_rest() == 0
+
+    def test_str(self):
+        assert self.obj.__str__() == 'Класс "Мешочек с бочёнками". Осталось 0 бочёнков.'
+        self.obj.shuffle()
+        assert self.obj.__str__() == 'Класс "Мешочек с бочёнками". Осталось 90 бочёнков.'
+
+    def test_eq(self):
+        assert self.obj == self.bag
+        self.obj.shuffle()
+        self.bag.shuffle()
+        assert self.obj == self.bag
+        self.obj.get_number()
+        assert self.bag > self.obj
+        assert self.bag >= self.obj
+        assert self.obj < self.bag
+        assert self.obj <= self.bag
+        self.bag.get_number()
+        assert self.obj != self.bag

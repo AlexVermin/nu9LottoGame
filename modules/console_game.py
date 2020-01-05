@@ -12,7 +12,8 @@ class LottoConsole:
         self.bag = LottoBag()
         self.round_no = 0
 
-    def show_main_menu(self):
+    @staticmethod
+    def show_main_menu():
         m_str = """************************************
 **           ЛОТО                 **
 ************************************
@@ -23,7 +24,8 @@ class LottoConsole:
 ************************************"""
         print(m_str)
 
-    def show_rules(self):
+    @staticmethod
+    def show_rules():
         m_str = """
 ***************************************************************************************************************
 **                                           Правила игры                                                    **
@@ -58,7 +60,8 @@ class LottoConsole:
         """
         print(m_str)
 
-    def show_player_card(self, p_player):
+    @staticmethod
+    def show_player_card(p_player):
         print('\n')
         print('+' * 48)
         print(f'++ {p_player.name:^42} ++')
@@ -186,7 +189,34 @@ class LottoConsole:
             else:
                 print('    Неверная команда!')
 
+    def __str__(self):
+        return f'Класс "Консольная версия игры в лото". Сыграно раундов: {self.round_no}. Количество участников: {len(self.players)}.'
+
+    def __eq__(self, other):
+        is_equal = self.round_no == other.round_no and len(self.players) == len(other.players)
+        if is_equal and len(self.players) > 0:
+            for player in self.players:
+                has_eq_player = False
+                for other_player in other.players:
+                    has_eq_player |= player == other_player
+                is_equal &= has_eq_player
+                if not is_equal:
+                    break
+        return is_equal
+
 
 if '__main__' == __name__:
     m_game = LottoConsole()
+    print(m_game)
+    m_test = LottoConsole()
+    print(m_test)
+    print(m_game == m_test)
+    print(m_game != m_test)
     m_game.setup_players()
+    m_test.setup_players()
+    print('After reg 1player for each game...')
+    print(m_game)
+    print(m_test)
+    print(m_game == m_test)
+    print(m_game != m_test)
+    print('Cause of different cards players have...')
